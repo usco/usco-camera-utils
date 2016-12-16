@@ -21,11 +21,13 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
  * assumes the bounds CENTER is not in world space for now, hence transforms needing to be passed
  * @param  {Object} camera the camera we are using
  * @param  {Object} bounds the current bounds of the entity
+ * @param  {Object} fitFactor alows tweaking fit distance default: 0.95
  */
 function computeCameraToFitBounds(_ref) {
   var camera = _ref.camera,
       bounds = _ref.bounds,
-      transforms = _ref.transforms;
+      transforms = _ref.transforms,
+      fitFactor = _ref.fitFactor;
 
   /*
   bounds: {
@@ -37,6 +39,7 @@ function computeCameraToFitBounds(_ref) {
   if (!bounds || !camera) {
     throw new Error('No camera/bounds specified!');
   }
+  fitFactor = fitFactor || 0.95;
 
   // const {projection, view} = camera
   // const radius = bounds.dia / 2
@@ -81,9 +84,10 @@ function computeCameraToFitBounds(_ref) {
   var vec = _glVec2.default.create();
   vec = _glVec2.default.subtract(vec, camNewPos, camNewTgt);
   vec = _glVec2.default.normalize(vec, vec);
-  vec = _glVec2.default.scale(vec, vec, dist);
+  vec = _glVec2.default.scale(vec, vec, dist * fitFactor);
 
   camNewPos = _glVec2.default.subtract(camNewPos, camNewPos, vec);
+  camNewTgt = _glVec2.default.subtract(camNewPos, camNewPos, vec);
 
   return {
     position: [].concat(_toConsumableArray(camNewPos)),

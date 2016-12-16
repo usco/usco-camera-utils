@@ -7,8 +7,9 @@ import vec3 from 'gl-vec3'
  * assumes the bounds CENTER is not in world space for now, hence transforms needing to be passed
  * @param  {Object} camera the camera we are using
  * @param  {Object} bounds the current bounds of the entity
+ * @param  {Object} fitFactor alows tweaking fit distance default: 0.95
  */
-export default function computeCameraToFitBounds ({camera, bounds, transforms}) {
+export default function computeCameraToFitBounds ({camera, bounds, transforms, fitFactor}) {
   /*
   bounds: {
     dia: 40,
@@ -19,6 +20,7 @@ export default function computeCameraToFitBounds ({camera, bounds, transforms}) 
   if (!bounds || !camera) {
     throw new Error('No camera/bounds specified!')
   }
+  fitFactor = fitFactor || 0.95
 
   // const {projection, view} = camera
   // const radius = bounds.dia / 2
@@ -63,9 +65,10 @@ export default function computeCameraToFitBounds ({camera, bounds, transforms}) 
   let vec = vec3.create()
   vec = vec3.subtract(vec, camNewPos, camNewTgt)
   vec = vec3.normalize(vec, vec)
-  vec = vec3.scale(vec, vec, dist)
+  vec = vec3.scale(vec, vec, dist * fitFactor)
 
   camNewPos = vec3.subtract(camNewPos, camNewPos, vec)
+  camNewTgt = vec3.subtract(camNewPos, camNewPos, vec)
 
   return {
     position: [...camNewPos],
