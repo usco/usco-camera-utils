@@ -65,10 +65,10 @@ export default function computeCameraToFitBounds ({camera, bounds, transforms, f
   let vec = vec3.create()
   vec = vec3.subtract(vec, camNewPos, camNewTgt)
   vec = vec3.normalize(vec, vec)
-  vec = vec3.scale(vec, vec, dist * fitFactor)
+  vec = vec3.scale(vec, vec, dist)
 
   camNewPos = vec3.subtract(camNewPos, camNewPos, vec)
-  camNewTgt = vec3.subtract(camNewPos, camNewPos, vec)
+  //camNewTgt = vec3.subtract(camNewPos, camNewPos, vec)
 
   return {
     position: [...camNewPos],

@@ -84,10 +84,10 @@ function computeCameraToFitBounds(_ref) {
   var vec = _glVec2.default.create();
   vec = _glVec2.default.subtract(vec, camNewPos, camNewTgt);
   vec = _glVec2.default.normalize(vec, vec);
-  vec = _glVec2.default.scale(vec, vec, dist * fitFactor);
+  vec = _glVec2.default.scale(vec, vec, dist);
 
   camNewPos = _glVec2.default.subtract(camNewPos, camNewPos, vec);
-  camNewTgt = _glVec2.default.subtract(camNewPos, camNewPos, vec);
+  //camNewTgt = vec3.subtract(camNewPos, camNewPos, vec)
 
   return {
     position: [].concat(_toConsumableArray(camNewPos)),
