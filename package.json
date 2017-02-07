@@ -1,5 +1,5 @@
 {
-  "name": "usco-camera-utils",
+  "name": "@usco/camera-utils",
   "version": "0.0.1",
   "description": "",
   "main": "dist/index.js",
